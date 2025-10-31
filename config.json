@@ -4,12 +4,5 @@
   "avatarUrl": "https://youke1.picui.cn/s1/2025/10/30/6902f4901a33a.png",
   "GMEEK_VERSION": "last",
   "allHead": "<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekVercount.js'></script>",
-  "script": "<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>",
-  "singlePage": ["link", "about"],
-  "iconList": {
-    "bluesky": "M3.06 2.18a8.03 8.03 0 0 0-2.38 5.8c.53 3.43 3.22 6 6.56 6.56.77.15 1.55.22 2.34.22 3.1 0 5.8-1.8 7.1-4.56.5-1.02.7-2.14.7-3.3 0-.5-.04-1-.13-1.48-.53-3.43-3.22-6-6.56-6.56A8.9 8.9 0 0 0 12 2c-1.75 0-3.4.5-4.8 1.4L12 9.7l2.4-4.5c.4-.7.4-1.6 0-2.3-.4-.7-1.2-1.1-2-1.1H9.6C8.8 1.8 8 2.2 7.6 2.9c-.4.7-.4 1.6 0 2.3L9.2 8 3.06 2.18z"
-  },
-  "exlink": {
-    "bluesky": "https://bsky.app/profile/3latlas.bsky.social"
-  }
+  "script": "<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>"
 }
