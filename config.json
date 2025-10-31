@@ -3,7 +3,7 @@
   "subTitle": "This is extraterrestrial heart",
   "avatarUrl": "https://youke1.picui.cn/s1/2025/10/30/6902f4901a33a.png",
   "GMEEK_VERSION": "last",
-  "allHead": "<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekVercount.js'></script>",
+  "allHead": "<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekVercount.js'></script><script>document.addEventListener('DOMContentLoaded',function(){const a=document.querySelector('a[title=\"Issue\"]');a&&a.remove()});</script>",
   "script": "<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>",
   "singlePage": ["about"],
   "iconList": {"bsky": "M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Z"},
