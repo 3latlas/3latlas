@@ -1,6 +1,6 @@
 {
-  "title": "电波宇宙",
-  "subTitle": "This is Radio Universe",
+  "title": "天外来物",
+  "subTitle": "Hello, 这里是记录事件的博客。",
   "avatarUrl": "https://pic1.imgdb.cn/item/691084d03203f7be00ea93b7.png",
   "GMEEK_VERSION": "last",
   "allHead": "<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekVercount.js'></script><script>document.addEventListener('DOMContentLoaded',function(){const a=document.querySelector('a[title=\"Issue\"]');a&&a.remove()});</script>",
