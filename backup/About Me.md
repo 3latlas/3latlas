@@ -1,20 +1,30 @@
-### 关于 3LATLAS | About 3LATLAS
+### 关于 TELL餮儿 | About TELLTEAR
 
-🪐 **中文**  
-3LATLAS 是一座「地外心脉」档案库，记录来自星际访客 **3I/ATLAS** 的每一次心跳。  
-我们追踪它的轨道、光变、彗发与所有未知，只为回答：  
-「当宇宙敲门，人类是否听得懂？」  
-这里所有数据开源、所有疑问开放，欢迎任何人引用、纠错、补充。  
-若你也在仰望星空，请把这份档案传给下一个好奇的人。
+【中文】  
+大家都叫我餮儿。  
+小时候听故事，饕餮是一只吃到停不下来的小怪兽；  
+长大才发现，它其实住在每个人的胃里——  
+贪一口甜，再贪一口辣，最后连“够了”都听不见。  
+我把这名字挂在耳边，像系一根细绳：  
+饿的时候，它提醒我去吃；  
+饱的时候，它提醒我去停。  
+于是，每一次开口，都是对自己的温柔问候：  
+“嘿，别急，留点位置给明天。”
 
-🛰 **English**  
-3LATLAS is an "extraterrestrial heartbeat" archive, logging every pulse of the interstellar visitor **3I/ATLAS**.  
-We chase its orbit, light-curve, coma and every unknown, trying to answer:  
-"When the universe knocks, can humanity understand?"  
-All data are open-source, all questions are open. Quote, correct, expand.  
-If you look up at the night sky too, pass this file to the next curious soul.
+【English】  
+Friends call me Tiao-er.  
+When I was little, Taotie was just a fairy-tale glutton who gobbled up everything—  
+including himself.  
+Growing up, I realized he actually lives in all our tummies:  
+one more spoon of sweet, one more bite of spice,  
+until “enough” becomes the hardest word to hear.  
+I wear the name like a soft string around my wrist:  
+it tugs me toward the table when I’m hungry,  
+and back into my chair when I’m full.  
+So every time I open my mouth, it’s a quiet promise:  
+“Slow down—save a little space for tomorrow.”
 
 📬 **Contact**  
-- Bluesky: [@3latlas.bsky.social](https://bsky.app/profile/3latlas.bsky.social)  
+- Bluesky: [@TELL餮儿](https://bsky.app/profile/telltear.cn)  
 
-👽 转载请注明出处 | Please credit when sharing.
+-  转载请注明出处 | Please credit when sharing.
