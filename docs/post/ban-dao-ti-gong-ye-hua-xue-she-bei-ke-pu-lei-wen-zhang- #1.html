@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <script src='https://blog.meekdai.com/Gmeek/plugins/GmeekVercount.js'></script><script>document.addEventListener('DOMContentLoaded',function(){const a=document.querySelector('a[title="Issue"]');a&&a.remove()});</script>
+    <link rel="icon" href="https://tc.3latlas.xyz/file/KJXRmyYt.png"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="# 把“烫手”的药水变成“恒温”的利器——半导体湿法制程温度挑战与 KELK Chemical Circulator 的解题思路
+
+## 一、为什么“洗个澡”也要±0.1 ℃？
+芯片在光刻、刻蚀、离子注入之后，表面会残留光刻胶、金属离子、颗粒等污染物。">
+<meta property="og:title" content="半导体工业化学设备科普类文章 #1">
+<meta property="og:description" content="# 把“烫手”的药水变成“恒温”的利器——半导体湿法制程温度挑战与 KELK Chemical Circulator 的解题思路
+
+## 一、为什么“洗个澡”也要±0.1 ℃？
+芯片在光刻、刻蚀、离子注入之后，表面会残留光刻胶、金属离子、颗粒等污染物。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://telltear.github.io/telltearsblog/post/ban-dao-ti-gong-ye-hua-xue-she-bei-ke-pu-lei-wen-zhang-%20%231.html">
+<meta property="og:image" content="https://tc.3latlas.xyz/file/KJXRmyYt.png">
+<title>半导体工业化学设备科普类文章 #1</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">半导体工业化学设备科普类文章 #1</h1>
+<div class="title-right">
+    <a href="https://telltear.github.io/telltearsblog" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/telltear/telltearsblog/issues/6" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>把“烫手”的药水变成“恒温”的利器——半导体湿法制程温度挑战与 KELK Chemical Circulator 的解题思路</h1>
+<h2>一、为什么“洗个澡”也要±0.1 ℃？</h2>
+<p>芯片在光刻、刻蚀、离子注入之后，表面会残留光刻胶、金属离子、颗粒等污染物。要想让下一层图形完美“贴”上去，必须把这些脏东西彻底洗掉——这就是湿法制程（Wet Bench）存在的意义。<br>
+湿法槽里翻滚的并不是普通自来水，而是 HF、HCl、NH₄OH、KOH、SC-1、SC-2、DHF、BHF、FPM 等“化学鸡尾酒”。它们共同的特点是：</p>
+<ol>
+<li>反应速率对温度极度敏感，1 ℃ 的漂移就能让刻蚀量偏差 3–5 %；</li>
+<li>金属离子溶出上限 &lt;10¹⁰ at/cm²，稍被污染就报废一批晶圆；</li>
+<li>很多药液具有强腐蚀性、挥发性或放热性，传统金属加热器“不敢碰”。</li>
+</ol>
+<p>于是“如何给这些‘脾气火爆’的药水精准升温、恒温”就成了每一道湿法工序的隐藏 Boss。</p>
+<h2>二、逐道工序拆解：温度到底难在哪儿？</h2>
+<p>下面用 90 nm～3 nm 代际通用的典型流程举例，看看不同药液最怕什么。</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>步骤</th>
+<th>典型药液（缩写）</th>
+<th>温度窗口</th>
+<th>工艺痛点</th>
+<th>温度相关难点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 去胶残</td>
+<td>SPM (H₂SO₄/H₂O₂)</td>
+<td>120–140 ℃</td>
+<td>放热剧烈、槽体局部沸腾</td>
+<td>需要快速带走反应热，否则“暴沸”喷液</td>
+</tr>
+<tr>
+<td>2. 金属离子清洗</td>
+<td>SC-2 (HCl/H₂O₂/H₂O)</td>
+<td>60–80 ℃</td>
+<td>金属溶出零容忍</td>
+<td>金属加热面不能接触药液</td>
+</tr>
+<tr>
+<td>3. 颗粒/有机物清洗</td>
+<td>SC-1 (NH₄OH/H₂O₂/H₂O)</td>
+<td>60–80 ℃</td>
+<td>NH₃ 挥发导致浓度漂移</td>
+<td>温度越高挥发越快，需要恒温±0.1 ℃抑制浓度变化</td>
+</tr>
+<tr>
+<td>4. 自然氧化层去除</td>
+<td>DHF (HF/H₂O, 0.5–2 %)</td>
+<td>20–30 ℃</td>
+<td>低温即可，但速率对温度敏感</td>
+<td>夏季厂房升温或泵循环发热易超 30 ℃，需主动冷却</td>
+</tr>
+<tr>
+<td>5. 接触孔/铝垫腐清</td>
+<td>HF+HNO₃ 系、FPM</td>
+<td>25–45 ℃</td>
+<td>放热、高挥发、强腐蚀</td>
+<td>金属溶出+局部过热=双杀</td>
+</tr>
+<tr>
+<td>6. 薄膜刻蚀</td>
+<td>BHF、BHF-2 (HF+NH₄F)</td>
+<td>25–40 ℃</td>
+<td>氟离子浓度+温度共同决定刻蚀选择比</td>
+<td>温度漂移 1 ℃，SiO₂/SiN 选择比变化 6 %</td>
+</tr>
+<tr>
+<td>7. 背面/基片清洗</td>
+<td>KOH (5–30 %)</td>
+<td>60–90 ℃</td>
+<td>K⁺ 金属污染</td>
+<td>金属加热器溶出 K⁺ 铁镍铬，直接报废</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p>小结：<br>
+“怕金属、怕放热、怕漂移”是共性；SPM、SC-1、SC-2 还要“高温”，DHF、BHF 却要“低温”。一台设备既要能加热又要能冷却，还得保证 0.1 ℃ 的稳态精度，这就是挑战。</p>
+<h2>三、传统方案为什么“踩坑”？</h2>
+<ol>
+<li>浸入式金属盘管——金属离子溶出，PASS；</li>
+<li>槽外循环板式换热器——二次换热效率低，±2 ℃ 精度难保；</li>
+<li>氟塑料壳体+电热丝——壳体耐腐够了，但电热丝局部过热，依旧有“热点”；</li>
+<li>风冷散热——厂房空调波动大，DHF 夏天控不住 30 ℃ 以下。</li>
+</ol>
+<h2>四、KELK Chemical Circulator 的“解题思路”</h2>
+<p>KELK 把“直接循环+电子冷热+玻璃状碳”做成三合一方案，正好打中上面所有痛点：</p>
+<ol>
+<li>
+<p>直接循环（Inline）<br>
+药液从处理槽抽出→经过 Circulator 升温/降温→立即回槽，没有二次换热，热惯性小，±0.1 ℃ 轻松达成。</p>
+</li>
+<li>
+<p>电子冷热（Peltier 水冷式）<br>
+同一模块既能加热又能制冷，遇到 SPM 放热可瞬间“制冷对冲”，遇到 DHF 夏季过热也能主动冷却到 20 ℃。</p>
+</li>
+<li>
+<p>玻璃状碳（Glassy Carbon）传热面<br>
+无金属离子溶出，无需镀膜，长年使用不剥离；同时耐 HF、HCl、KOH、NH₄OH、BHF 全 pH 区间。</p>
+</li>
+<li>
+<p>全氟树脂管路 + 无橡胶 O-ring 设计<br>
+密封面与药液隔离，不怕 FPM、SC-1 把橡胶“吃掉”后泄漏。</p>
+</li>
+<li>
+<p>内置漏液/温度异常传感器<br>
+出现渗漏或温漂立即停机并给出干接点报警，可与工厂 EAP 系统联锁，避免整槽晶圆报废。</p>
+</li>
+</ol>
+<h2>五、实际落地场景举例</h2>
+<ul>
+<li>45 nm 产线 SC-1 槽：设定 70 ℃，Circulator 把 25 ℃ 新液一次性拉到 70 ℃ 并稳态 ±0.1 ℃，金属离子增量 &lt;5×10⁹ at/cm²；</li>
+<li>3D NAND 深孔清洗 BHF：需要 30 ℃±0.5 ℃、选择比 20:1，Circulator 把温度漂移压到 0.08 ℃，选择比波动 &lt;1 %；</li>
+<li>功率器件背面 KOH 腐蚀：90 ℃ 高温强碱，金属加热器 2 周就报废，改用 Circulator 后连续 6 个月零金属溶出。</li>
+</ul>
+<h2>六、结语</h2>
+<p>当制程节点继续向 2 nm、1.4 nm 推进，湿法清洗的“温度窗口”只会越来越窄，金属污染指标只会越来越严。KELK Chemical Circulator 用“玻璃状碳 + 直接循环 + 电子冷热”三板斧，把“给药水洗澡”这件看似传统的事，做成了纳米级精度的隐形冠军——让工程师们不再为“±1 ℃ 的漂移”彻夜守着温度计，而把更多精力留给下一代器件架构的创新。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;">转载请注明出处</div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://telltear.github.io/telltearsblog">TELL餮兒</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>
+
+</html>
